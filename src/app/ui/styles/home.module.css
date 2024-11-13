@@ -1,0 +1,13 @@
+.text_midnightblue{
+    color: #2C3E50;
+     
+}
+.custom_button {
+    width: fit-content;
+    cursor: pointer;    
+    color: #2C3E50;
+    &:hover {
+        background-color: #2C3E50;
+        color: #fff;
+    }
+}
