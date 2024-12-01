@@ -1,22 +1,30 @@
-import { posts } from '@/app/lib/placeholder-data';
+import React from 'react';
+import { notFound } from 'next/navigation';
+//import { posts } from '@/app/lib/placeholder-data';
 import Post from '@/app/ui/components/posts/Post';
+import { connectToDB, getPosts } from '@/app/lib/data';
+
 
 interface PageProps {
-  params: Promise<{ id: string }>;
+  params: { id: string };
 }
 
 export default async function Page({ params }: PageProps) {
-  const { id } = await params;
-  const post = posts.find((post) => post.id === id);
+  const posts = await getPosts();
+  const { id } = params;
+  const post = posts?.find((post) => post.id === id);
+  console.log('Post:', post);
 
   if (!post) {
-    return <div>Post not found</div>;
+    notFound();
   }
 
+   
   return (
     <>
       <h1 className="mb-4 text-4xl text-zinc-950 font-extrabold leading-none lg:text-6xl">{post.title}</h1>
-      <Post {...post} />
+      <Post id={post.id} title={post.title} author={post.author} content={post.content} date={post.date} />
+
     </>
   );
 }
